@@ -93,7 +93,7 @@ export default function SubmitPage() {
               and will appear on the portal once reviewed and approved by our team.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link href="/" style={{
+              <Link href="/problems" style={{
                 background: 'var(--ore)', color: '#fff',
                 padding: '0.8rem 1.8rem', borderRadius: '8px',
                 textDecoration: 'none', fontWeight: 600, fontSize: '0.95rem',
