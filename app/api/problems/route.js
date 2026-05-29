@@ -1,8 +1,8 @@
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from('problems')
     .select('id, created_at, title, category, description, submitter_name, location, status')
     .eq('approved', true)

@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase'
 import { NextResponse } from 'next/server'
 
 export async function POST(request) {
@@ -11,7 +11,6 @@ export async function POST(request) {
 
   const { title, category, description, submitter_name, location, contact_email } = body
 
-  // Validation
   if (!title?.trim())          return NextResponse.json({ error: 'Problem title is required.' }, { status: 400 })
   if (!category?.trim())       return NextResponse.json({ error: 'Category is required.' }, { status: 400 })
   if (!description?.trim())    return NextResponse.json({ error: 'Description is required.' }, { status: 400 })
@@ -20,7 +19,7 @@ export async function POST(request) {
   if (title.length > 200)        return NextResponse.json({ error: 'Title is too long (max 200 chars).' }, { status: 400 })
   if (description.length > 5000) return NextResponse.json({ error: 'Description is too long (max 5000 chars).' }, { status: 400 })
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from('problems')
     .insert([{
       title:          title.trim(),
@@ -36,11 +35,10 @@ export async function POST(request) {
 
   if (error) {
     console.error('Supabase insert error:', JSON.stringify(error))
-    // Return the REAL error so you can see exactly what is failing
     return NextResponse.json({
       error: `Database error: ${error.message}`,
-      code:  error.code  || null,
-      hint:  error.hint  || null,
+      code:  error.code    || null,
+      hint:  error.hint    || null,
       details: error.details || null,
     }, { status: 500 })
   }
