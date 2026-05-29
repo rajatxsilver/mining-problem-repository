@@ -20,22 +20,22 @@ const CATEGORIES = [
 ]
 
 const CHAR_LIMITS = {
-  title:          200,
-  description:   5000,
+  title: 200,
+  description: 5000,
   submitter_name: 100,
-  location:       200,
+  location: 200,
 }
 
 export default function SubmitPage() {
   const [form, setForm] = useState({
-    title:          '',
-    category:       '',
-    description:    '',
+    title: '',
+    category: '',
+    description: '',
     submitter_name: '',
-    location:       '',
-    contact_email:  '',
+    location: '',
+    contact_email: '',
   })
-  const [status, setStatus]     = useState('idle') // idle | loading | success | error
+  const [status, setStatus] = useState('idle') // idle | loading | success | error
   const [errorMsg, setErrorMsg] = useState('')
 
   const handleChange = e => {
@@ -50,10 +50,10 @@ export default function SubmitPage() {
     setErrorMsg('')
 
     try {
-      const res  = await fetch('/api/submit', {
-        method:  'POST',
+      const res = await fetch('/api/submit', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(form),
+        body: JSON.stringify(form),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Submission failed.')
@@ -71,7 +71,7 @@ export default function SubmitPage() {
         <header>
           <div className="header-inner">
             <div className="header-logo">Mining Problem Submission <span>Portal</span></div>
-            <Link href="/" className="back-link">← Back</Link>
+            <Link href="/problems" className="back-link">← Back</Link>
           </div>
         </header>
 
@@ -101,7 +101,7 @@ export default function SubmitPage() {
                 ← Back to Portal
               </Link>
               <button
-                onClick={() => { setForm({ title:'', category:'', description:'', submitter_name:'', location:'', contact_email:'' }); setStatus('idle') }}
+                onClick={() => { setForm({ title: '', category: '', description: '', submitter_name: '', location: '', contact_email: '' }); setStatus('idle') }}
                 style={{
                   background: '#fff', color: 'var(--ore)',
                   border: '1.5px solid var(--stone)',
@@ -133,7 +133,7 @@ export default function SubmitPage() {
       <header>
         <div className="header-inner">
           <div className="header-logo">Mining Problem Submission <span>Portal</span></div>
-          <Link href="/" className="back-link">← Back to Portal</Link>
+          <Link href="/problems" className="back-link">← Back to Portal</Link>
         </div>
       </header>
 
