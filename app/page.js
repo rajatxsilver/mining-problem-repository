@@ -91,56 +91,6 @@ function Navbar() {
 }
 
 function Hero() {
-  return (
-    <section style={{ background:'linear-gradient(135deg,#f8f9fc 0%,#eef2f7 50%,#f5efe6 100%)', padding:'100px 2rem 90px', textAlign:'center', position:'relative', overflow:'hidden' }}>
-      {/* decorative blobs */}
-      <div style={{ position:'absolute', top:-80, right:-80, width:320, height:320, background:'rgba(15,39,64,0.04)', borderRadius:'50%', pointerEvents:'none' }} />
-      <div style={{ position:'absolute', bottom:-60, left:-60, width:240, height:240, background:'rgba(232,168,76,0.08)', borderRadius:'50%', pointerEvents:'none' }} />
-
-      <div style={{ position:'relative', maxWidth:780, margin:'0 auto' }}>
-        <div style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem', background:'rgba(15,39,64,0.06)', border:'1px solid rgba(15,39,64,0.12)', padding:'0.35rem 1rem', borderRadius:100, fontSize:'0.75rem', fontWeight:600, letterSpacing:'0.1em', textTransform:'uppercase', color:'#0f2740', marginBottom:'1.8rem' }}>
-          <span>⛏️</span> Department of Mining Engineering · Est. 1923
-        </div>
-
-        <h1 style={{ fontFamily:'Georgia,serif', fontSize:'clamp(2.2rem,5vw,3.4rem)', fontWeight:700, color:'#0f2740', lineHeight:1.18, marginBottom:'1.4rem' }}>
-          Bridging Industry Challenges<br />
-          with <span style={{ color:'#c8893a', fontStyle:'italic' }}>Academic Excellence</span>
-        </h1>
-
-        <p style={{ fontSize:'1.05rem', color:'#5a5248', lineHeight:1.8, maxWidth:580, margin:'0 auto 2.4rem' }}>
-          India's oldest Mining Engineering department — connecting real-world mining
-          problems with IIT (BHU)'s century-long tradition of research and innovation.
-        </p>
-
-        <div style={{ display:'flex', gap:'1rem', justifyContent:'center', flexWrap:'wrap' }}>
-          <Link href="/submit" style={{ background:'linear-gradient(135deg,#0f2740,#1e3a5a)', color:'#fff', textDecoration:'none', padding:'0.9rem 2rem', borderRadius:9, fontWeight:600, fontSize:'0.95rem', boxShadow:'0 4px 18px rgba(15,39,64,0.22)', display:'inline-flex', alignItems:'center', gap:'0.5rem' }}>
-            Submit a Problem <span>→</span>
-          </Link>
-          <Link href="/problems" style={{ background:'#fff', color:'#0f2740', textDecoration:'none', padding:'0.9rem 2rem', borderRadius:9, fontWeight:600, fontSize:'0.95rem', border:'1.5px solid #ddd', display:'inline-flex', alignItems:'center', gap:'0.5rem' }}>
-            Browse Problems <span>⛏️</span>
-          </Link>
-        </div>
-
-        {/* legacy pills */}
-        <div style={{ display:'flex', gap:'1.5rem', justifyContent:'center', flexWrap:'wrap', marginTop:'3.5rem' }}>
-          {[
-            { num:'100+', label:'Years of Legacy' },
-            { num:'1923', label:'Established' },
-            { num:'1st',  label:'Mining PhD in India' },
-            { num:'19',   label:'Research Labs' },
-          ].map(s => (
-            <div key={s.label} style={{ textAlign:'center' }}>
-              <div style={{ fontFamily:'Georgia,serif', fontSize:'1.6rem', fontWeight:700, color:'#0f2740' }}>{s.num}</div>
-              <div style={{ fontSize:'0.72rem', fontWeight:600, letterSpacing:'0.08em', textTransform:'uppercase', color:'#7a7068', marginTop:'0.15rem' }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function MinSocIntro() {
   const pillars = [
     { icon:'📚', label:'Academic Excellence' },
     { icon:'🏭', label:'Industry Interaction' },
@@ -150,94 +100,77 @@ function MinSocIntro() {
     { icon:'🌱', label:'Holistic Growth' },
   ]
   return (
-    <section id="minsoc" style={{ padding:'90px 2rem', background:'#fff', borderBottom:'1px solid #f0ece6' }}>
-      <div style={{ maxWidth:1100, margin:'0 auto' }}>
-
-        {/* heading */}
-        <div style={{ textAlign:'center', marginBottom:'3.5rem' }}>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem', background:'rgba(200,137,58,0.08)', border:'1px solid rgba(200,137,58,0.2)', padding:'0.35rem 1rem', borderRadius:100, fontSize:'0.72rem', fontWeight:700, letterSpacing:'0.14em', textTransform:'uppercase', color:'#c8893a', marginBottom:'1rem' }}>
-            ⛏️ Official Student & Academic Body
+    <section style={{ background:'linear-gradient(160deg,#f8f9fc 0%,#fff 50%,#fdf8f2 100%)', padding:'80px 2rem 70px', position:'relative', overflow:'hidden' }}>
+      <div style={{ position:'absolute', top:-60, right:-60, width:280, height:280, background:'rgba(200,137,58,0.05)', borderRadius:'50%', pointerEvents:'none' }} />
+      <div style={{ position:'absolute', bottom:-80, left:-80, width:320, height:320, background:'rgba(15,39,64,0.03)', borderRadius:'50%', pointerEvents:'none' }} />
+      <div style={{ maxWidth:1100, margin:'0 auto', position:'relative' }}>
+        <div style={{ display:'flex', justifyContent:'center', marginBottom:'2.5rem' }}>
+          <div style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem', background:'rgba(200,137,58,0.08)', border:'1px solid rgba(200,137,58,0.25)', padding:'0.4rem 1.1rem', borderRadius:100, fontSize:'0.72rem', fontWeight:700, letterSpacing:'0.14em', textTransform:'uppercase', color:'#c8893a' }}>
+            ⛏️ Official Student & Academic Body · IIT (BHU) Varanasi
           </div>
-          <h2 style={{ fontFamily:'Georgia,serif', fontSize:'clamp(1.8rem,3vw,2.4rem)', fontWeight:700, color:'#0f2740', marginBottom:'0.8rem' }}>
-            The Mining Society
-          </h2>
-          <p style={{ fontSize:'0.85rem', fontWeight:600, letterSpacing:'0.06em', color:'#7a7068', textTransform:'uppercase' }}>
-            Department of Mining Engineering · IIT (BHU) Varanasi
-          </p>
         </div>
-
-        {/* two-column layout */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4rem', alignItems:'start', marginBottom:'3rem' }}>
-
-          {/* left — main intro */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'5rem', alignItems:'center', marginBottom:'3.5rem' }}>
           <div>
-            <div style={{ width:48, height:4, background:'linear-gradient(90deg,#c8893a,#e8a84c)', borderRadius:2, marginBottom:'1.5rem' }} />
-            <p style={{ fontSize:'0.97rem', color:'#3d3530', lineHeight:1.9, marginBottom:'1.2rem' }}>
-              The Mining Society is the <strong>official academic, professional, and student body</strong> of
-              the Department of Mining Engineering, IIT (BHU) Varanasi — established to promote academic
-              excellence, professional development, and holistic growth among students and faculty.
+            <h1 style={{ fontFamily:'Georgia,serif', fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#0f2740', lineHeight:1.18, marginBottom:'1.4rem' }}>
+              Welcome to the<br />
+              <span style={{ color:'#c8893a' }}>Mining Society</span>
+            </h1>
+            <p style={{ fontSize:'0.97rem', color:'#3d3530', lineHeight:1.9, marginBottom:'1rem' }}>
+              The <strong>Mining Society</strong> is the official academic, professional, and student body
+              of the Department of Mining Engineering, IIT (BHU) Varanasi — established to promote
+              academic excellence, professional development, and holistic growth among students and faculty.
             </p>
-            <p style={{ fontSize:'0.97rem', color:'#3d3530', lineHeight:1.9, marginBottom:'1.2rem' }}>
-              The Society keeps its members updated with the latest developments in mining engineering,
-              enhances communication and leadership skills, and fosters social, cultural, and intellectual
+            <p style={{ fontSize:'0.97rem', color:'#3d3530', lineHeight:1.9, marginBottom:'1rem' }}>
+              We keep members updated with the latest developments in mining engineering,
+              enhance communication and leadership skills, and foster social, cultural, and intellectual
               activities through lectures, seminars, workshops, and technical events.
             </p>
-            <p style={{ fontSize:'0.97rem', color:'#3d3530', lineHeight:1.9 }}>
-              It serves as a platform for interaction with distinguished scientists, engineers,
-              industry experts, alumni, and policymakers — strengthening collaboration between
-              academia, industry, and regulatory bodies.
+            <p style={{ fontSize:'0.97rem', color:'#3d3530', lineHeight:1.9, marginBottom:'2rem' }}>
+              Membership is open to all faculty, students, and research scholars of the department.
+              Governed by an Executive Committee headed by the Head of Department as Ex-Officio President,
+              with elected student representatives managing day-to-day activities.
             </p>
+            <div style={{ display:'flex', gap:'0.9rem', flexWrap:'wrap' }}>
+              <Link href="/submit" style={{ background:'linear-gradient(135deg,#0f2740,#1e3a5a)', color:'#fff', textDecoration:'none', padding:'0.85rem 1.8rem', borderRadius:8, fontWeight:600, fontSize:'0.92rem', boxShadow:'0 4px 16px rgba(15,39,64,0.2)', display:'inline-flex', alignItems:'center', gap:'0.5rem' }}>
+                Submit a Problem →
+              </Link>
+              <Link href="/problems" style={{ background:'#fff', color:'#0f2740', textDecoration:'none', padding:'0.85rem 1.8rem', borderRadius:8, fontWeight:600, fontSize:'0.92rem', border:'1.5px solid #ddd', display:'inline-flex', alignItems:'center', gap:'0.5rem' }}>
+                Browse Problems
+              </Link>
+            </div>
           </div>
-
-          {/* right — membership & governance */}
-          <div style={{ display:'flex', flexDirection:'column', gap:'1.2rem' }}>
+          <div style={{ display:'flex', flexDirection:'column', gap:'1rem' }}>
             {[
-              {
-                icon: '👥',
-                title: 'Membership',
-                body: 'Open to all faculty members, students, and research scholars of the department, as well as other interested individuals approved by the Executive Committee.',
-              },
-              {
-                icon: '🏛️',
-                title: 'Governance',
-                body: 'Governed by a General Body and an Executive Committee. The Head of the Department serves as Ex-Officio President, with elected student representatives and nominated faculty managing activities.',
-              },
-              {
-                icon: '📋',
-                title: 'Activities',
-                body: 'Technical lectures, industrial interactions, cultural and sports activities, publication of technical magazines, and student development programs addressing academic and professional issues.',
-              },
-            ].map(item => (
-              <div key={item.title} style={{ display:'flex', gap:'1rem', background:'#f8f9fc', borderRadius:12, padding:'1.2rem 1.4rem', border:'1px solid #eee' }}>
-                <div style={{ fontSize:'1.4rem', flexShrink:0, marginTop:'0.1rem' }}>{item.icon}</div>
+              { icon:'👥', title:'Who We Are', body:'The official body representing students, faculty, and research scholars of Mining Engineering — united by a passion for advancing the field.' },
+              { icon:'🏛️', title:'What We Do', body:'Technical lectures, industrial interactions, cultural activities, publication of magazines, and student development programs addressing academic and professional issues.' },
+              { icon:'🌐', title:'Our Network', body:'A platform for interaction with scientists, engineers, industry experts, alumni, and policymakers — from CIL and Tata Steel to global mining leaders.' },
+            ].map(card => (
+              <div key={card.title} style={{ display:'flex', gap:'1rem', background:'#fff', borderRadius:12, padding:'1.2rem 1.4rem', border:'1px solid #eee', boxShadow:'0 2px 10px rgba(0,0,0,0.04)' }}>
+                <div style={{ fontSize:'1.5rem', flexShrink:0 }}>{card.icon}</div>
                 <div>
-                  <div style={{ fontWeight:700, fontSize:'0.9rem', color:'#0f2740', marginBottom:'0.3rem' }}>{item.title}</div>
-                  <p style={{ fontSize:'0.83rem', color:'#5a5248', lineHeight:1.75, margin:0 }}>{item.body}</p>
+                  <div style={{ fontWeight:700, fontSize:'0.9rem', color:'#0f2740', marginBottom:'0.3rem' }}>{card.title}</div>
+                  <p style={{ fontSize:'0.83rem', color:'#5a5248', lineHeight:1.75, margin:0 }}>{card.body}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-
-        {/* pillars strip */}
-        <div style={{ borderTop:'1px solid #f0ece6', paddingTop:'2.5rem' }}>
-          <div style={{ fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.14em', textTransform:'uppercase', color:'#7a7068', textAlign:'center', marginBottom:'1.4rem' }}>
-            Society Pillars
-          </div>
-          <div style={{ display:'flex', flexWrap:'wrap', gap:'0.75rem', justifyContent:'center' }}>
+        <div style={{ borderTop:'1px solid #ede8e0', paddingTop:'2.2rem' }}>
+          <div style={{ fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.14em', textTransform:'uppercase', color:'#7a7068', textAlign:'center', marginBottom:'1.2rem' }}>Society Pillars</div>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:'0.65rem', justifyContent:'center' }}>
             {pillars.map(p => (
-              <div key={p.label} style={{ display:'flex', alignItems:'center', gap:'0.5rem', background:'linear-gradient(135deg,#0f2740,#1e3a5a)', color:'#fff', padding:'0.55rem 1.1rem', borderRadius:100, fontSize:'0.85rem', fontWeight:500 }}>
+              <div key={p.label} style={{ display:'flex', alignItems:'center', gap:'0.45rem', background:'linear-gradient(135deg,#0f2740,#1e3a5a)', color:'#fff', padding:'0.5rem 1rem', borderRadius:100, fontSize:'0.83rem', fontWeight:500 }}>
                 <span>{p.icon}</span> {p.label}
               </div>
             ))}
           </div>
         </div>
-
       </div>
-      <style>{`@media(max-width:768px){#minsoc > div > div:nth-child(2){grid-template-columns:1fr !important;gap:2rem !important;}}`}</style>
+      <style>{`@media(max-width:768px){.hero-inner-grid{grid-template-columns:1fr !important;gap:2.5rem !important;}}`}</style>
     </section>
   )
 }
+
 
 function About() {
   return (
@@ -585,7 +518,6 @@ export default function HomePage() {
     <>
       <Navbar />
       <Hero />
-      <MinSocIntro />
       <About />
       <WhatWeDo />
       <ProblemPortalTeaser stats={stats} />
