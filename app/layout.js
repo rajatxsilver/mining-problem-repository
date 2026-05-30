@@ -17,8 +17,8 @@ const dmSans = DM_Sans({
 })
 
 export const metadata = {
-  title: 'Mining Problem Submission Portal | IIT (BHU) Varanasi',
-  description: 'Submit and browse real-world mining challenges from industry professionals. A Department of Mining Engineering initiative at IIT (BHU) Varanasi.',
+  title: 'Mining Society | IIT (BHU) Varanasi',
+  description: "India's oldest Mining Engineering department — bridging industry challenges with academic excellence since 1923.",
 }
 
 export default function RootLayout({ children }) {
