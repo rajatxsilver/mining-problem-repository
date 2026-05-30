@@ -5,20 +5,20 @@ import Link from 'next/link'
 
 // ── constants ────────────────────────────────────────────────
 const CATEGORY_ICONS = {
-  'Blasting':        '💥',
-  'Ventilation':     '🌀',
-  'Geomechanics':    '⛰️',
-  'Drainage':        '💧',
-  'Safety':          '🦺',
-  'Environment':     '🌿',
-  'Machinery':       '⚙️',
-  'Transportation':  '🚛',
-  'Surveying':       '📐',
-  'Explosives':      '🧨',
-  'Rock Mechanics':  '🪨',
+  'Blasting': '💥',
+  'Ventilation': '🌀',
+  'Geomechanics': '⛰️',
+  'Drainage': '💧',
+  'Safety': '🦺',
+  'Environment': '🌿',
+  'Machinery': '⚙️',
+  'Transportation': '🚛',
+  'Surveying': '📐',
+  'Explosives': '🧨',
+  'Rock Mechanics': '🪨',
   'Slope Stability': '🏔️',
-  'Other':           '⛏️',
-  'default':         '⛏️',
+  'Other': '⛏️',
+  'default': '⛏️',
 }
 
 const EXAMPLE_PROBLEMS = [
@@ -52,9 +52,9 @@ function formatDate(iso) {
 
 function StatusBadge({ status }) {
   const map = {
-    'Solved':           ['status-solved',      '✅ Solved'],
-    'Partially Solved': ['status-partial',     '🔄 Partially Solved'],
-    'Unresolved':       ['status-unresolved',  '🔴 Unresolved'],
+    'Solved': ['status-solved', '✅ Solved'],
+    'Partially Solved': ['status-partial', '🔄 Partially Solved'],
+    'Unresolved': ['status-unresolved', '🔴 Unresolved'],
   }
   const [cls, label] = map[status] || map['Unresolved']
   return <span className={`status-badge ${cls}`}>{label}</span>
@@ -62,11 +62,11 @@ function StatusBadge({ status }) {
 
 // ── component ────────────────────────────────────────────────
 export default function HomePage() {
-  const [problems, setProblems]     = useState([])
-  const [filtered, setFiltered]     = useState([])
-  const [activeCat, setActiveCat]   = useState('all')
-  const [activeSt, setActiveSt]     = useState('all')
-  const [loading, setLoading]       = useState(true)
+  const [problems, setProblems] = useState([])
+  const [filtered, setFiltered] = useState([])
+  const [activeCat, setActiveCat] = useState('all')
+  const [activeSt, setActiveSt] = useState('all')
+  const [loading, setLoading] = useState(true)
   const [fetchError, setFetchError] = useState(null)
 
   // fetch on mount
@@ -86,7 +86,7 @@ export default function HomePage() {
   useEffect(() => {
     let result = problems
     if (activeCat !== 'all') result = result.filter(p => p.category === activeCat)
-    if (activeSt  !== 'all') result = result.filter(p => p.status   === activeSt)
+    if (activeSt !== 'all') result = result.filter(p => p.status === activeSt)
     setFiltered(result)
   }, [activeCat, activeSt, problems])
 
@@ -94,9 +94,9 @@ export default function HomePage() {
 
   const statusActiveClass = (s) => {
     if (activeSt !== s) return ''
-    if (s === 'Solved')           return 'active-solved'
+    if (s === 'Solved') return 'active-solved'
     if (s === 'Partially Solved') return 'active-partial'
-    if (s === 'Unresolved')       return 'active-unresolved'
+    if (s === 'Unresolved') return 'active-unresolved'
     return 'active'
   }
 
@@ -108,8 +108,8 @@ export default function HomePage() {
           <div className="header-logo">
             Mining Problem Submission <span>Portal</span>
           </div>
-          <a href="https://iitbhu.ac.in" className="back-link" target="_blank" rel="noopener noreferrer">
-            ← IIT (BHU)
+          <a href="www.miningsociety.in" className="back-link" target="_blank" rel="noopener noreferrer">
+            ← Mining Society
           </a>
         </div>
       </header>
