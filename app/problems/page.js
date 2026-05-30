@@ -108,7 +108,7 @@ export default function HomePage() {
           <div className="header-logo">
             Mining Problem Submission <span>Portal</span>
           </div>
-          <a href="www.miningsociety.in" className="back-link" target="_blank" rel="noopener noreferrer">
+          <a href="/" className="back-link" rel="noopener noreferrer">
             ← Mining Society
           </a>
         </div>
