@@ -140,6 +140,105 @@ function Hero() {
   )
 }
 
+function MinSocIntro() {
+  const pillars = [
+    { icon:'📚', label:'Academic Excellence' },
+    { icon:'🏭', label:'Industry Interaction' },
+    { icon:'🎯', label:'Professional Development' },
+    { icon:'🤝', label:'Alumni Engagement' },
+    { icon:'📰', label:'Technical Publications' },
+    { icon:'🌱', label:'Holistic Growth' },
+  ]
+  return (
+    <section id="minsoc" style={{ padding:'90px 2rem', background:'#fff', borderBottom:'1px solid #f0ece6' }}>
+      <div style={{ maxWidth:1100, margin:'0 auto' }}>
+
+        {/* heading */}
+        <div style={{ textAlign:'center', marginBottom:'3.5rem' }}>
+          <div style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem', background:'rgba(200,137,58,0.08)', border:'1px solid rgba(200,137,58,0.2)', padding:'0.35rem 1rem', borderRadius:100, fontSize:'0.72rem', fontWeight:700, letterSpacing:'0.14em', textTransform:'uppercase', color:'#c8893a', marginBottom:'1rem' }}>
+            ⛏️ Official Student & Academic Body
+          </div>
+          <h2 style={{ fontFamily:'Georgia,serif', fontSize:'clamp(1.8rem,3vw,2.4rem)', fontWeight:700, color:'#0f2740', marginBottom:'0.8rem' }}>
+            The Mining Society
+          </h2>
+          <p style={{ fontSize:'0.85rem', fontWeight:600, letterSpacing:'0.06em', color:'#7a7068', textTransform:'uppercase' }}>
+            Department of Mining Engineering · IIT (BHU) Varanasi
+          </p>
+        </div>
+
+        {/* two-column layout */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4rem', alignItems:'start', marginBottom:'3rem' }}>
+
+          {/* left — main intro */}
+          <div>
+            <div style={{ width:48, height:4, background:'linear-gradient(90deg,#c8893a,#e8a84c)', borderRadius:2, marginBottom:'1.5rem' }} />
+            <p style={{ fontSize:'0.97rem', color:'#3d3530', lineHeight:1.9, marginBottom:'1.2rem' }}>
+              The Mining Society is the <strong>official academic, professional, and student body</strong> of
+              the Department of Mining Engineering, IIT (BHU) Varanasi — established to promote academic
+              excellence, professional development, and holistic growth among students and faculty.
+            </p>
+            <p style={{ fontSize:'0.97rem', color:'#3d3530', lineHeight:1.9, marginBottom:'1.2rem' }}>
+              The Society keeps its members updated with the latest developments in mining engineering,
+              enhances communication and leadership skills, and fosters social, cultural, and intellectual
+              activities through lectures, seminars, workshops, and technical events.
+            </p>
+            <p style={{ fontSize:'0.97rem', color:'#3d3530', lineHeight:1.9 }}>
+              It serves as a platform for interaction with distinguished scientists, engineers,
+              industry experts, alumni, and policymakers — strengthening collaboration between
+              academia, industry, and regulatory bodies.
+            </p>
+          </div>
+
+          {/* right — membership & governance */}
+          <div style={{ display:'flex', flexDirection:'column', gap:'1.2rem' }}>
+            {[
+              {
+                icon: '👥',
+                title: 'Membership',
+                body: 'Open to all faculty members, students, and research scholars of the department, as well as other interested individuals approved by the Executive Committee.',
+              },
+              {
+                icon: '🏛️',
+                title: 'Governance',
+                body: 'Governed by a General Body and an Executive Committee. The Head of the Department serves as Ex-Officio President, with elected student representatives and nominated faculty managing activities.',
+              },
+              {
+                icon: '📋',
+                title: 'Activities',
+                body: 'Technical lectures, industrial interactions, cultural and sports activities, publication of technical magazines, and student development programs addressing academic and professional issues.',
+              },
+            ].map(item => (
+              <div key={item.title} style={{ display:'flex', gap:'1rem', background:'#f8f9fc', borderRadius:12, padding:'1.2rem 1.4rem', border:'1px solid #eee' }}>
+                <div style={{ fontSize:'1.4rem', flexShrink:0, marginTop:'0.1rem' }}>{item.icon}</div>
+                <div>
+                  <div style={{ fontWeight:700, fontSize:'0.9rem', color:'#0f2740', marginBottom:'0.3rem' }}>{item.title}</div>
+                  <p style={{ fontSize:'0.83rem', color:'#5a5248', lineHeight:1.75, margin:0 }}>{item.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* pillars strip */}
+        <div style={{ borderTop:'1px solid #f0ece6', paddingTop:'2.5rem' }}>
+          <div style={{ fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.14em', textTransform:'uppercase', color:'#7a7068', textAlign:'center', marginBottom:'1.4rem' }}>
+            Society Pillars
+          </div>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:'0.75rem', justifyContent:'center' }}>
+            {pillars.map(p => (
+              <div key={p.label} style={{ display:'flex', alignItems:'center', gap:'0.5rem', background:'linear-gradient(135deg,#0f2740,#1e3a5a)', color:'#fff', padding:'0.55rem 1.1rem', borderRadius:100, fontSize:'0.85rem', fontWeight:500 }}>
+                <span>{p.icon}</span> {p.label}
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+      <style>{`@media(max-width:768px){#minsoc > div > div:nth-child(2){grid-template-columns:1fr !important;gap:2rem !important;}}`}</style>
+    </section>
+  )
+}
+
 function About() {
   return (
     <section id="about" style={{ padding:'90px 2rem', background:'#fff' }}>
@@ -457,7 +556,7 @@ function Footer() {
           {[
             { href:'https://www.instagram.com/miningsociety.iitbhu', label:'Instagram' },
             { href:'https://www.facebook.com/min.iitbhu/',           label:'Facebook' },
-            { href:'https://in.linkedin.com/company/minfest-iit-bhu',label:'LinkedIn' },
+            { href:'https://www.linkedin.com/company/department-of-mining-engineering-iit-varanasi', label:'LinkedIn' },
           ].map(s => (
             <div key={s.label} style={{ marginBottom:'0.6rem' }}>
               <a href={s.href} target="_blank" rel="noopener noreferrer"
@@ -486,6 +585,7 @@ export default function HomePage() {
     <>
       <Navbar />
       <Hero />
+      <MinSocIntro />
       <About />
       <WhatWeDo />
       <ProblemPortalTeaser stats={stats} />
