@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { CONFERENCES } from '@/lib/conferences'
 
 // ── Stats fetched from your own DB ───────────────────────────
 function useStats() {
@@ -343,27 +344,24 @@ function Events() {
   ]
 
   return (
-    <section id="events" style={{ padding:'90px 2rem', background:'#fff' }}>
+    <section id="events" style={{ padding:'90px 2rem 60px', background:'#fff' }}>
       <div style={{ maxWidth:1100, margin:'0 auto' }}>
         <div style={{ textAlign:'center', marginBottom:'3.5rem' }}>
           <div style={{ fontSize:'0.72rem', fontWeight:700, letterSpacing:'0.16em', textTransform:'uppercase', color:'#c8893a', marginBottom:'0.8rem' }}>Events</div>
           <h2 style={{ fontFamily:'Georgia,serif', fontSize:'clamp(1.7rem,3vw,2.3rem)', fontWeight:700, color:'#0f2740' }}>
-            Workshops & Conferences
+            Our Workshops & Conferences
           </h2>
         </div>
 
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(320px,1fr))', gap:'1.5rem' }}>
           {events.map(ev => (
             <div key={ev.title} style={{ borderRadius:14, overflow:'hidden', border:'1px solid #eee', boxShadow:'0 2px 12px rgba(0,0,0,0.05)', display:'flex', flexDirection:'column' }}>
-              {/* top bar */}
               <div style={{ background: ev.status === 'upcoming' ? 'linear-gradient(135deg,#0f2740,#1e3a5a)' : '#f8f9fc', padding:'1.2rem 1.5rem', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                 <span style={{ fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', background: ev.status === 'upcoming' ? 'rgba(232,168,76,0.2)' : 'rgba(15,39,64,0.08)', color: ev.status === 'upcoming' ? '#e8a84c' : '#0f2740', padding:'0.25rem 0.7rem', borderRadius:100 }}>
                   {ev.status === 'upcoming' ? '🟢 Upcoming' : '✅ Completed'}
                 </span>
                 <span style={{ fontSize:'0.78rem', fontWeight:600, color: ev.status === 'upcoming' ? 'rgba(255,255,255,0.7)' : '#7a7068' }}>{ev.date}</span>
               </div>
-
-              {/* body */}
               <div style={{ padding:'1.5rem', flex:1, display:'flex', flexDirection:'column', gap:'0.6rem' }}>
                 <div style={{ fontSize:'0.7rem', fontWeight:600, letterSpacing:'0.1em', textTransform:'uppercase', color:'#c8893a' }}>{ev.tag} · {ev.short}</div>
                 <h3 style={{ fontFamily:'Georgia,serif', fontSize:'1.05rem', fontWeight:700, color:'#0f2740', lineHeight:1.35 }}>{ev.title}</h3>
@@ -376,6 +374,137 @@ function Events() {
             </div>
           ))}
         </div>
+      </div>
+    </section>
+  )
+}
+
+function formatConfDate(iso) {
+  if (!iso) return 'TBA'
+  const d = new Date(iso)
+  if (isNaN(d)) return iso
+  return d.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })
+}
+
+function ConferenceDirectory() {
+  const [activeTab, setActiveTab] = useState('international')
+  const [search, setSearch] = useState('')
+
+  const filtered = CONFERENCES
+    .filter(c => c.type === activeTab)
+    .filter(c => {
+      if (!search.trim()) return true
+      const q = search.toLowerCase()
+      return (
+        c.name.toLowerCase().includes(q) ||
+        (c.location || '').toLowerCase().includes(q) ||
+        (c.focus || '').toLowerCase().includes(q)
+      )
+    })
+
+  const intlCount = CONFERENCES.filter(c => c.type === 'international').length
+  const indiaCount = CONFERENCES.filter(c => c.type === 'india').length
+
+  return (
+    <section style={{ padding:'70px 2rem 90px', background:'#f8f9fc' }}>
+      <div style={{ maxWidth:1100, margin:'0 auto' }}>
+        <div style={{ textAlign:'center', marginBottom:'2.5rem' }}>
+          <div style={{ fontSize:'0.72rem', fontWeight:700, letterSpacing:'0.16em', textTransform:'uppercase', color:'#c8893a', marginBottom:'0.8rem' }}>Conference Directory</div>
+          <h2 style={{ fontFamily:'Georgia,serif', fontSize:'clamp(1.7rem,3vw,2.3rem)', fontWeight:700, color:'#0f2740', marginBottom:'0.8rem' }}>
+            Upcoming Mining & Geotechnical Conferences
+          </h2>
+          <p style={{ fontSize:'0.9rem', color:'#7a7068', maxWidth:560, margin:'0 auto' }}>
+            A curated list of national and international conferences, symposiums, and exhibitions
+            relevant to mining engineering and geomechanics.
+          </p>
+        </div>
+
+        {/* tabs */}
+        <div style={{ display:'flex', justifyContent:'center', gap:'0.6rem', marginBottom:'1.5rem' }}>
+          {[
+            { key:'international', label:'🌍 International', count: intlCount },
+            { key:'india',         label:'🇮🇳 National (India)', count: indiaCount },
+          ].map(t => (
+            <button key={t.key} onClick={() => setActiveTab(t.key)}
+              style={{
+                padding:'0.65rem 1.4rem', borderRadius:9, border:'1.5px solid', cursor:'pointer',
+                borderColor: activeTab===t.key ? '#0f2740' : '#ddd',
+                background: activeTab===t.key ? 'linear-gradient(135deg,#0f2740,#1e3a5a)' : '#fff',
+                color: activeTab===t.key ? '#fff' : '#3d3530',
+                fontWeight:600, fontSize:'0.88rem', fontFamily:'inherit',
+                transition:'all 0.2s',
+              }}>
+              {t.label} <span style={{ opacity:0.75, fontWeight:500 }}>({t.count})</span>
+            </button>
+          ))}
+        </div>
+
+        {/* search */}
+        <div style={{ maxWidth:480, margin:'0 auto 2.5rem', position:'relative' }}>
+          <input
+            type="text"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search by name, location, or focus area…"
+            style={{
+              width:'100%', padding:'0.8rem 1rem 0.8rem 2.6rem',
+              border:'1.5px solid #ddd', borderRadius:9,
+              fontSize:'0.9rem', fontFamily:'inherit',
+              outline:'none', background:'#fff',
+            }}
+          />
+          <span style={{ position:'absolute', left:'0.9rem', top:'50%', transform:'translateY(-50%)', fontSize:'1rem', opacity:0.4 }}>🔍</span>
+          {search && (
+            <button onClick={() => setSearch('')}
+              style={{ position:'absolute', right:'0.7rem', top:'50%', transform:'translateY(-50%)', background:'none', border:'none', cursor:'pointer', fontSize:'0.9rem', color:'#7a7068' }}>
+              ✕
+            </button>
+          )}
+        </div>
+
+        {/* result count */}
+        <div style={{ fontSize:'0.8rem', color:'#7a7068', textAlign:'center', marginBottom:'1.5rem' }}>
+          Showing <strong>{filtered.length}</strong> of {activeTab === 'international' ? intlCount : indiaCount} conferences
+        </div>
+
+        {/* grid */}
+        {filtered.length === 0 ? (
+          <div style={{ textAlign:'center', padding:'3rem', color:'#7a7068' }}>
+            <div style={{ fontSize:'2rem', marginBottom:'0.6rem' }}>🔍</div>
+            <p>No conferences match your search.</p>
+          </div>
+        ) : (
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(310px,1fr))', gap:'1.2rem' }}>
+            {filtered.map((c, i) => (
+              <div key={i} style={{ background:'#fff', borderRadius:12, padding:'1.4rem', border:'1px solid #eee', boxShadow:'0 2px 10px rgba(0,0,0,0.04)', display:'flex', flexDirection:'column', gap:'0.6rem' }}>
+                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', gap:'0.6rem' }}>
+                  <span style={{ fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.06em', textTransform:'uppercase', color:'#c8893a', background:'rgba(200,137,58,0.1)', padding:'0.2rem 0.6rem', borderRadius:5 }}>
+                    📅 {formatConfDate(c.date)}
+                  </span>
+                </div>
+                <h4 style={{ fontFamily:'Georgia,serif', fontSize:'0.98rem', fontWeight:700, color:'#0f2740', lineHeight:1.4 }}>
+                  {c.name}
+                </h4>
+                {c.location && (
+                  <div style={{ fontSize:'0.82rem', color:'#5a5248', display:'flex', alignItems:'center', gap:'0.35rem' }}>
+                    📍 {c.location}
+                  </div>
+                )}
+                {c.focus && (
+                  <p style={{ fontSize:'0.8rem', color:'#7a7068', lineHeight:1.65, margin:0 }}>
+                    {c.focus}
+                  </p>
+                )}
+                {c.website && (
+                  <a href={c.website} target="_blank" rel="noopener noreferrer"
+                    style={{ marginTop:'0.3rem', fontSize:'0.82rem', fontWeight:600, color:'#0f2740', textDecoration:'none', borderBottom:'2px solid #c8893a', paddingBottom:'1px', alignSelf:'flex-start' }}>
+                    Visit Website →
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )
@@ -522,6 +651,7 @@ export default function HomePage() {
       <WhatWeDo />
       <ProblemPortalTeaser stats={stats} />
       <Events />
+      <ConferenceDirectory />
       <ResearchAreas />
       <Contact />
       <Footer />
