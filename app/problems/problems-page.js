@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
+import WorkshopQuestions from './WorkshopQuestions'
 
 const CATEGORY_ICONS = {
   'Blasting': '💥', 'Ventilation': '🌀', 'Geomechanics': '⛰️',
@@ -22,24 +23,35 @@ function formatDate(iso) {
 
 function StatusBadge({ status }) {
   const map = {
-    'Solved': ['status-solved', '✅ Solved'],
-    'Partially Solved': ['status-partial', '🔄 Partial'],
-    'Unresolved': ['status-unresolved', '🔴 Unresolved'],
+    'Solved':           ['status-solved',     '✅ Solved'],
+    'Partially Solved': ['status-partial',    '🔄 Partial'],
+    'Unresolved':       ['status-unresolved', '🔴 Unresolved'],
   }
   const [cls, label] = map[status] || map['Unresolved']
   return <span className={`status-badge ${cls}`}>{label}</span>
 }
 
 export default function ProblemsPage() {
-  const [problems, setProblems] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [problems, setProblems]     = useState([])
+  const [loading, setLoading]       = useState(true)
   const [fetchError, setFetchError] = useState(null)
+  const [view, setView]             = useState('community') // 'community' | 'workshop'
 
-  const [activeCat, setActiveCat] = useState('all')
-  const [activeSt, setActiveSt] = useState('all')
-  const [search, setSearch] = useState('')
+  // allow deep link: /problems#workshop
+  useEffect(() => {
+    if (window.location.hash === '#workshop') setView('workshop')
+  }, [])
+
+  const switchView = (v) => {
+    setView(v)
+    window.history.replaceState(null, '', v === 'workshop' ? '#workshop' : window.location.pathname)
+  }
+
+  const [activeCat, setActiveCat]   = useState('all')
+  const [activeSt, setActiveSt]     = useState('all')
+  const [search, setSearch]         = useState('')
   const [expandedId, setExpandedId] = useState(null)
-  const [visible, setVisible] = useState(PAGE_SIZE)
+  const [visible, setVisible]       = useState(PAGE_SIZE)
 
   useEffect(() => {
     fetch('/api/problems')
@@ -67,7 +79,7 @@ export default function ProblemsPage() {
     const q = search.trim().toLowerCase()
     return problems.filter(p => {
       if (activeCat !== 'all' && p.category !== activeCat) return false
-      if (activeSt !== 'all' && p.status !== activeSt) return false
+      if (activeSt  !== 'all' && p.status   !== activeSt)  return false
       if (q) {
         const hay = `${p.title} ${p.description} ${p.submitter_name} ${p.location || ''} ${p.category}`.toLowerCase()
         if (!hay.includes(q)) return false
@@ -80,7 +92,7 @@ export default function ProblemsPage() {
 
   const statusActiveClass = (s) => {
     if (activeSt !== s) return ''
-    if (s === 'Solved') return 'active-solved'
+    if (s === 'Solved')           return 'active-solved'
     if (s === 'Partially Solved') return 'active-partial'
     return 'active-unresolved'
   }
@@ -101,11 +113,11 @@ export default function ProblemsPage() {
       {/* TITLE STRIP */}
       <section className="hero" style={{ padding: '56px 2rem 50px' }}>
         <div className="hero-inner">
-          <div className="hero-label">Community Submissions</div>
-          <h2>Submitted <em>Mining Problems</em></h2>
+          <div className="hero-label">Problem Portal</div>
+          <h2>Mining <em>Problems</em></h2>
           <p>
-            Real-world challenges shared by mining professionals, researchers, and students.
-            Click any problem to read the full details.
+            Real-world challenges from the mining industry — submitted by the community
+            and raised by experts at our workshops. Click any problem to read the full details.
           </p>
           <div className="hero-divider" />
         </div>
@@ -113,6 +125,23 @@ export default function ProblemsPage() {
 
       <section className="submitted-section" style={{ paddingTop: 50 }}>
         <div className="submitted-inner">
+
+          {/* VIEW TABS */}
+          <div className="ptabs" role="tablist">
+            <button role="tab" aria-selected={view === 'community'}
+              className={view === 'community' ? 'on' : ''} onClick={() => switchView('community')}>
+              📬 Community Submissions
+              {problems.length > 0 && <span>{problems.length}</span>}
+            </button>
+            <button role="tab" aria-selected={view === 'workshop'}
+              className={view === 'workshop' ? 'on' : ''} onClick={() => switchView('workshop')}>
+              🎤 Workshop Problem Statements
+              <span>88</span>
+            </button>
+          </div>
+
+          {view === 'workshop' ? <WorkshopQuestions /> : (
+          <>
 
           {/* STATS */}
           {problems.length > 0 && (
@@ -290,6 +319,8 @@ export default function ProblemsPage() {
               </button>
             </div>
           )}
+          </>
+          )}
         </div>
       </section>
 
@@ -306,6 +337,26 @@ export default function ProblemsPage() {
       </footer>
 
       <style>{`
+        .ptabs {
+          display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap;
+          margin-bottom: 2.2rem;
+        }
+        .ptabs button {
+          font-family: inherit; cursor: pointer; font-size: 0.9rem; font-weight: 600;
+          padding: 0.75rem 1.4rem; border-radius: 10px; border: 1.5px solid var(--stone);
+          background: #fff; color: var(--body); transition: all 0.2s;
+          display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .ptabs button span {
+          font-size: 0.72rem; font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 100px;
+          background: rgba(15,39,64,0.08); color: var(--ore);
+        }
+        .ptabs button:hover { border-color: var(--amber); }
+        .ptabs button.on {
+          background: linear-gradient(135deg, var(--ore), var(--steel));
+          border-color: var(--ore); color: #fff; box-shadow: 0 4px 16px rgba(15,39,64,0.22);
+        }
+        .ptabs button.on span { background: rgba(232,168,76,0.25); color: var(--gold); }
         .plist {
           background: #fff;
           border: 1px solid #e8e4dc;
