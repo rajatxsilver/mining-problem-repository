@@ -12,6 +12,7 @@ const CATEGORY_ICONS = {
   'Other': '⛏️', 'default': '⛏️',
 }
 
+
 const PAGE_SIZE = 20
 
 function formatDate(iso) {
@@ -23,19 +24,19 @@ function formatDate(iso) {
 
 function StatusBadge({ status }) {
   const map = {
-    'Solved':           ['status-solved',     '✅ Solved'],
-    'Partially Solved': ['status-partial',    '🔄 Partial'],
-    'Unresolved':       ['status-unresolved', '🔴 Unresolved'],
+    'Solved': ['status-solved', '✅ Solved'],
+    'Partially Solved': ['status-partial', '🔄 Partial'],
+    'Unresolved': ['status-unresolved', '🔴 Unresolved'],
   }
   const [cls, label] = map[status] || map['Unresolved']
   return <span className={`status-badge ${cls}`}>{label}</span>
 }
 
 export default function ProblemsPage() {
-  const [problems, setProblems]     = useState([])
-  const [loading, setLoading]       = useState(true)
+  const [problems, setProblems] = useState([])
+  const [loading, setLoading] = useState(true)
   const [fetchError, setFetchError] = useState(null)
-  const [view, setView]             = useState('community') // 'community' | 'workshop'
+  const [view, setView] = useState('community') // 'community' | 'workshop'
 
   // allow deep link: /problems#workshop
   useEffect(() => {
@@ -47,11 +48,11 @@ export default function ProblemsPage() {
     window.history.replaceState(null, '', v === 'workshop' ? '#workshop' : window.location.pathname)
   }
 
-  const [activeCat, setActiveCat]   = useState('all')
-  const [activeSt, setActiveSt]     = useState('all')
-  const [search, setSearch]         = useState('')
+  const [activeCat, setActiveCat] = useState('all')
+  const [activeSt, setActiveSt] = useState('all')
+  const [search, setSearch] = useState('')
   const [expandedId, setExpandedId] = useState(null)
-  const [visible, setVisible]       = useState(PAGE_SIZE)
+  const [visible, setVisible] = useState(PAGE_SIZE)
 
   useEffect(() => {
     fetch('/api/problems')
@@ -79,7 +80,7 @@ export default function ProblemsPage() {
     const q = search.trim().toLowerCase()
     return problems.filter(p => {
       if (activeCat !== 'all' && p.category !== activeCat) return false
-      if (activeSt  !== 'all' && p.status   !== activeSt)  return false
+      if (activeSt !== 'all' && p.status !== activeSt) return false
       if (q) {
         const hay = `${p.title} ${p.description} ${p.submitter_name} ${p.location || ''} ${p.category}`.toLowerCase()
         if (!hay.includes(q)) return false
@@ -92,7 +93,7 @@ export default function ProblemsPage() {
 
   const statusActiveClass = (s) => {
     if (activeSt !== s) return ''
-    if (s === 'Solved')           return 'active-solved'
+    if (s === 'Solved') return 'active-solved'
     if (s === 'Partially Solved') return 'active-partial'
     return 'active-unresolved'
   }
@@ -141,185 +142,185 @@ export default function ProblemsPage() {
           </div>
 
           {view === 'workshop' ? <WorkshopQuestions /> : (
-          <>
-
-          {/* STATS */}
-          {problems.length > 0 && (
-            <div className="stats-bar" style={{ marginTop: 0 }}>
-              <div className="stat-item">
-                <div className="stat-number">{problems.length}</div>
-                <div className="stat-label">Total Problems</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number" style={{ color: '#15803d' }}>
-                  {problems.filter(p => p.status === 'Solved').length}
-                </div>
-                <div className="stat-label">Solved</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number" style={{ color: '#b45309' }}>
-                  {problems.filter(p => p.status === 'Partially Solved').length}
-                </div>
-                <div className="stat-label">Partially Solved</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number" style={{ color: '#b91c1c' }}>
-                  {problems.filter(p => p.status === 'Unresolved').length}
-                </div>
-                <div className="stat-label">Unresolved</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">{categories.length}</div>
-                <div className="stat-label">Categories</div>
-              </div>
-            </div>
-          )}
-
-          {/* SEARCH + FILTERS */}
-          {problems.length > 0 && (
             <>
-              <div style={{ maxWidth: 520, margin: '0 auto 1.8rem', position: 'relative' }}>
-                <span style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.4 }}>🔍</span>
-                <input
-                  type="text" value={search} onChange={e => setSearch(e.target.value)}
-                  placeholder="Search by title, description, author, location…"
-                  className="field-input"
-                  style={{ paddingLeft: '2.5rem', paddingRight: '2.2rem' }}
-                />
-                {search && (
-                  <button onClick={() => setSearch('')} aria-label="Clear search"
-                    style={{ position: 'absolute', right: '0.8rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)' }}>
-                    ✕
-                  </button>
-                )}
-              </div>
 
-              <div className="filter-group" style={{ marginBottom: '1.8rem' }}>
-                <div>
-                  <div className="filter-row-label">Filter by Category</div>
-                  <div className="filter-row">
-                    <button className={`filter-btn ${activeCat === 'all' ? 'active' : ''}`} onClick={() => setActiveCat('all')}>
-                      All Categories
-                    </button>
-                    {categories.map(c => (
-                      <button key={c} className={`filter-btn ${activeCat === c ? 'active' : ''}`} onClick={() => setActiveCat(c)}>
-                        {CATEGORY_ICONS[c] || CATEGORY_ICONS.default} {c}
-                      </button>
-                    ))}
+              {/* STATS */}
+              {problems.length > 0 && (
+                <div className="stats-bar" style={{ marginTop: 0 }}>
+                  <div className="stat-item">
+                    <div className="stat-number">{problems.length}</div>
+                    <div className="stat-label">Total Problems</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-number" style={{ color: '#15803d' }}>
+                      {problems.filter(p => p.status === 'Solved').length}
+                    </div>
+                    <div className="stat-label">Solved</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-number" style={{ color: '#b45309' }}>
+                      {problems.filter(p => p.status === 'Partially Solved').length}
+                    </div>
+                    <div className="stat-label">Partially Solved</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-number" style={{ color: '#b91c1c' }}>
+                      {problems.filter(p => p.status === 'Unresolved').length}
+                    </div>
+                    <div className="stat-label">Unresolved</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-number">{categories.length}</div>
+                    <div className="stat-label">Categories</div>
                   </div>
                 </div>
-                <div>
-                  <div className="filter-row-label">Filter by Status</div>
-                  <div className="filter-row">
-                    <button className={`filter-btn ${activeSt === 'all' ? 'active' : ''}`} onClick={() => setActiveSt('all')}>
-                      All Statuses
-                    </button>
-                    {['Solved', 'Partially Solved', 'Unresolved'].map(s => (
-                      <button key={s} className={`filter-btn ${statusActiveClass(s)}`} onClick={() => setActiveSt(s)}>
-                        {s === 'Solved' ? '✅' : s === 'Partially Solved' ? '🔄' : '🔴'} {s}
+              )}
+
+              {/* SEARCH + FILTERS */}
+              {problems.length > 0 && (
+                <>
+                  <div style={{ maxWidth: 520, margin: '0 auto 1.8rem', position: 'relative' }}>
+                    <span style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.4 }}>🔍</span>
+                    <input
+                      type="text" value={search} onChange={e => setSearch(e.target.value)}
+                      placeholder="Search by title, description, author, location…"
+                      className="field-input"
+                      style={{ paddingLeft: '2.5rem', paddingRight: '2.2rem' }}
+                    />
+                    {search && (
+                      <button onClick={() => setSearch('')} aria-label="Clear search"
+                        style={{ position: 'absolute', right: '0.8rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)' }}>
+                        ✕
                       </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginBottom: '0.75rem' }}>
-                Showing <strong style={{ color: 'var(--ore)' }}>{shown.length}</strong> of {filtered.length} problem{filtered.length !== 1 ? 's' : ''}
-              </div>
-            </>
-          )}
-
-          {/* STATES */}
-          {loading && (
-            <div className="state-box">
-              <div className="spinner" />
-              <h5>Loading Submissions…</h5>
-            </div>
-          )}
-          {!loading && fetchError && (
-            <div className="state-box">
-              <div className="state-icon">⚠️</div>
-              <h5>Could Not Load Submissions</h5>
-              <p>{fetchError}</p>
-            </div>
-          )}
-          {!loading && !fetchError && problems.length === 0 && (
-            <div className="state-box">
-              <div className="state-icon">📭</div>
-              <h5>No Approved Submissions Yet</h5>
-              <p>
-                Problems will appear here once reviewed and approved.{' '}
-                <Link href="/submit">Be the first to submit!</Link>
-              </p>
-            </div>
-          )}
-          {!loading && !fetchError && problems.length > 0 && filtered.length === 0 && (
-            <div className="state-box">
-              <div className="state-icon">🔍</div>
-              <h5>No problems match your search or filters</h5>
-              <p>Try different keywords or reset the filters.</p>
-            </div>
-          )}
-
-          {/* COMPACT LIST */}
-          {shown.length > 0 && (
-            <div className="plist">
-              <div className="plist-head">
-                <div>Status</div>
-                <div>Problem</div>
-                <div className="col-cat">Category</div>
-                <div className="col-author">Submitted by</div>
-                <div className="col-date">Date</div>
-                <div />
-              </div>
-
-              {shown.map(p => {
-                const open = expandedId === p.id
-                return (
-                  <div key={p.id} className={`plist-item ${open ? 'open' : ''}`}>
-                    <button
-                      className="plist-row"
-                      onClick={() => setExpandedId(open ? null : p.id)}
-                      aria-expanded={open}
-                    >
-                      <div><StatusBadge status={p.status} /></div>
-                      <div className="col-title">{p.title}</div>
-                      <div className="col-cat">
-                        <span className="card-tag">{CATEGORY_ICONS[p.category] || CATEGORY_ICONS.default} {p.category}</span>
-                      </div>
-                      <div className="col-author">👤 {p.submitter_name}</div>
-                      <div className="col-date">{formatDate(p.created_at)}</div>
-                      <div className="chev">{open ? '▾' : '▸'}</div>
-                    </button>
-
-                    {open && (
-                      <div className="plist-detail">
-                        <div className="detail-meta">
-                          <span className="card-tag">{CATEGORY_ICONS[p.category] || CATEGORY_ICONS.default} {p.category}</span>
-                          <span>👤 {p.submitter_name}</span>
-                          {p.location && <span>📍 {p.location}</span>}
-                          {p.created_at && <span>📅 {formatDate(p.created_at)}</span>}
-                        </div>
-                        <div className="detail-label">Problem Description</div>
-                        <p className="detail-body">{p.description}</p>
-                      </div>
                     )}
                   </div>
-                )
-              })}
-            </div>
-          )}
 
-          {/* LOAD MORE */}
-          {filtered.length > visible && (
-            <div style={{ textAlign: 'center', marginTop: '1.6rem' }}>
-              <button className="filter-btn" style={{ padding: '0.7rem 1.8rem' }}
-                onClick={() => setVisible(v => v + PAGE_SIZE)}>
-                Show more ({filtered.length - visible} remaining)
-              </button>
-            </div>
-          )}
-          </>
+                  <div className="filter-group" style={{ marginBottom: '1.8rem' }}>
+                    <div>
+                      <div className="filter-row-label">Filter by Category</div>
+                      <div className="filter-row">
+                        <button className={`filter-btn ${activeCat === 'all' ? 'active' : ''}`} onClick={() => setActiveCat('all')}>
+                          All Categories
+                        </button>
+                        {categories.map(c => (
+                          <button key={c} className={`filter-btn ${activeCat === c ? 'active' : ''}`} onClick={() => setActiveCat(c)}>
+                            {CATEGORY_ICONS[c] || CATEGORY_ICONS.default} {c}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="filter-row-label">Filter by Status</div>
+                      <div className="filter-row">
+                        <button className={`filter-btn ${activeSt === 'all' ? 'active' : ''}`} onClick={() => setActiveSt('all')}>
+                          All Statuses
+                        </button>
+                        {['Solved', 'Partially Solved', 'Unresolved'].map(s => (
+                          <button key={s} className={`filter-btn ${statusActiveClass(s)}`} onClick={() => setActiveSt(s)}>
+                            {s === 'Solved' ? '✅' : s === 'Partially Solved' ? '🔄' : '🔴'} {s}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginBottom: '0.75rem' }}>
+                    Showing <strong style={{ color: 'var(--ore)' }}>{shown.length}</strong> of {filtered.length} problem{filtered.length !== 1 ? 's' : ''}
+                  </div>
+                </>
+              )}
+
+              {/* STATES */}
+              {loading && (
+                <div className="state-box">
+                  <div className="spinner" />
+                  <h5>Loading Submissions…</h5>
+                </div>
+              )}
+              {!loading && fetchError && (
+                <div className="state-box">
+                  <div className="state-icon">⚠️</div>
+                  <h5>Could Not Load Submissions</h5>
+                  <p>{fetchError}</p>
+                </div>
+              )}
+              {!loading && !fetchError && problems.length === 0 && (
+                <div className="state-box">
+                  <div className="state-icon">📭</div>
+                  <h5>No Approved Submissions Yet</h5>
+                  <p>
+                    Problems will appear here once reviewed and approved.{' '}
+                    <Link href="/submit">Be the first to submit!</Link>
+                  </p>
+                </div>
+              )}
+              {!loading && !fetchError && problems.length > 0 && filtered.length === 0 && (
+                <div className="state-box">
+                  <div className="state-icon">🔍</div>
+                  <h5>No problems match your search or filters</h5>
+                  <p>Try different keywords or reset the filters.</p>
+                </div>
+              )}
+
+              {/* COMPACT LIST */}
+              {shown.length > 0 && (
+                <div className="plist">
+                  <div className="plist-head">
+                    <div>Status</div>
+                    <div>Problem</div>
+                    <div className="col-cat">Category</div>
+                    <div className="col-author">Submitted by</div>
+                    <div className="col-date">Date</div>
+                    <div />
+                  </div>
+
+                  {shown.map(p => {
+                    const open = expandedId === p.id
+                    return (
+                      <div key={p.id} className={`plist-item ${open ? 'open' : ''}`}>
+                        <button
+                          className="plist-row"
+                          onClick={() => setExpandedId(open ? null : p.id)}
+                          aria-expanded={open}
+                        >
+                          <div><StatusBadge status={p.status} /></div>
+                          <div className="col-title">{p.title}</div>
+                          <div className="col-cat">
+                            <span className="card-tag">{CATEGORY_ICONS[p.category] || CATEGORY_ICONS.default} {p.category}</span>
+                          </div>
+                          <div className="col-author">👤 {p.submitter_name}</div>
+                          <div className="col-date">{formatDate(p.created_at)}</div>
+                          <div className="chev">{open ? '▾' : '▸'}</div>
+                        </button>
+
+                        {open && (
+                          <div className="plist-detail">
+                            <div className="detail-meta">
+                              <span className="card-tag">{CATEGORY_ICONS[p.category] || CATEGORY_ICONS.default} {p.category}</span>
+                              <span>👤 {p.submitter_name}</span>
+                              {p.location && <span>📍 {p.location}</span>}
+                              {p.created_at && <span>📅 {formatDate(p.created_at)}</span>}
+                            </div>
+                            <div className="detail-label">Problem Description</div>
+                            <p className="detail-body">{p.description}</p>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+
+              {/* LOAD MORE */}
+              {filtered.length > visible && (
+                <div style={{ textAlign: 'center', marginTop: '1.6rem' }}>
+                  <button className="filter-btn" style={{ padding: '0.7rem 1.8rem' }}
+                    onClick={() => setVisible(v => v + PAGE_SIZE)}>
+                    Show more ({filtered.length - visible} remaining)
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
